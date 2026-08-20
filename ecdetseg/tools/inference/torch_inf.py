@@ -401,7 +401,7 @@ if __name__ == "__main__":
         "-d",
         "--device",
         default="cuda:0",
-        help="Device to run inference on (e.g., 'cuda:0' or 'cpu')",
+        help="Device to run inference on (e.g., 'cuda:0', 'xpu:0', 'xpu' or 'cpu')",
     )
     parser.add_argument("-t", "--thresh", type=float, default=0.4)
     parser.add_argument("--num-workers", type=int, default=4, help="Thread workers for video draw/write")

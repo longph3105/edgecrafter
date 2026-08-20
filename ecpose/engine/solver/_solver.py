@@ -43,8 +43,12 @@ class BaseSolver(object):
         cfg = self.cfg
         if cfg.device:
             device = torch.device(cfg.device)
+        elif torch.cuda.is_available():
+            device = torch.device('cuda')
+        elif getattr(torch, 'xpu', None) is not None and torch.xpu.is_available():
+            device = torch.device('xpu')
         else:
-            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            device = torch.device('cpu')
         self.model = cfg.model
 
         # NOTE: Must load_tuning_state before EMA instance building

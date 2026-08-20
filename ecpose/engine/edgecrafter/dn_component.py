@@ -117,8 +117,8 @@ def prepare_for_cdn(dn_args, training, num_queries, num_classes, num_keypoints, 
 
         single_pad = int(max(known_num))
         pad_size = int(single_pad * 2 * dn_number)
-        positive_idx = torch.tensor(range(len(poses))).long().cuda().unsqueeze(0).repeat(dn_number, 1)
-        positive_idx += (torch.tensor(range(dn_number)) * len(poses) * 2).long().cuda().unsqueeze(1)
+        positive_idx = torch.tensor(range(len(poses)), device=device).long().unsqueeze(0).repeat(dn_number, 1)
+        positive_idx += (torch.tensor(range(dn_number), device=device) * len(poses) * 2).long().unsqueeze(1)
         positive_idx = positive_idx.flatten()
         negative_idx = positive_idx + len(poses)
 
@@ -144,8 +144,8 @@ def prepare_for_cdn(dn_args, training, num_queries, num_classes, num_keypoints, 
 
         input_pose_embed = inverse_sigmoid(known_poses_expand)
 
-        padding_label = torch.zeros(pad_size, hidden_dim * (num_keypoints + 1)).cuda()
-        padding_pose = torch.zeros(pad_size, num_keypoints+1).cuda()
+        padding_label = torch.zeros(pad_size, hidden_dim * (num_keypoints + 1), device=device)
+        padding_pose = torch.zeros(pad_size, num_keypoints+1, device=device)
 
         input_query_label = padding_label.repeat(batch_size, 1, 1)
         input_query_pose = padding_pose[...,None].repeat(batch_size, 1, 1, 2)

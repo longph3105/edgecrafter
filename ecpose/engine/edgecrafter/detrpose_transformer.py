@@ -210,13 +210,15 @@ class DeformableTransformerDecoderLayer(nn.Module):
     def with_pos_embed(tensor, pos, training):
         if pos is not None:
             np = pos.shape[2]
-            # if training:
-            #     x1, x2 = tensor.split([1, np], dim=2)
-            #     x2 = x2 + pos
-            #     tensor = torch.concat((x1, x2), dim=2)
-            # else:
-            #     tensor[:, :, -np:] += pos
-            tensor[:, :, -np:] += pos
+            if training:
+                # non-inplace add: autograd needs `tensor` (a view produced by a
+                # previous op) unmodified for backward; in-place `+=` on a slice
+                # bumps its version counter and breaks gradient computation.
+                x1, x2 = tensor.split([1, np], dim=2)
+                x2 = x2 + pos
+                tensor = torch.concat((x1, x2), dim=2)
+            else:
+                tensor[:, :, -np:] += pos
         return tensor
     def forward_FFN(self, tgt):
         tgt2 = self.linear2(self.dropout2(self.activation(self.linear1(tgt))))

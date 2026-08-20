@@ -168,8 +168,9 @@ class ECSolver(BaseSolver):
                         for name in filenames:
                             torch.save(coco_evaluator.coco_eval[self.iou_type].eval,
                                     self.output_dir / "eval" / name)
-            if torch.cuda.is_available():  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.
-                torch.cuda.empty_cache()
+            accelerator = getattr(torch, dist_utils.current_device(), None)
+            if accelerator is not None:  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.
+                accelerator.empty_cache()
 
         total_time = time.time() - start_time
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))

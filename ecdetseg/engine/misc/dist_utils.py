@@ -25,6 +25,23 @@ from torch.utils.data import DistributedSampler
 from ..data import DataLoader
 
 
+def _accelerator_module():
+    """Return the active accelerator module (torch.xpu or torch.cuda), or None on CPU-only setups."""
+    if getattr(torch, 'xpu', None) is not None and torch.xpu.is_available():
+        return torch.xpu
+    if torch.cuda.is_available():
+        return torch.cuda
+    return None
+
+
+def current_device() -> str:
+    """Return the device type string ('xpu', 'cuda' or 'cpu') for the active accelerator."""
+    accelerator = _accelerator_module()
+    if accelerator is None:
+        return 'cpu'
+    return accelerator.__name__.rsplit('.', 1)[-1]
+
+
 def setup_distributed(print_rank: int=0, print_method: str='builtin', seed: int=None, ):
     """
     env setup
@@ -39,13 +56,16 @@ def setup_distributed(print_rank: int=0, print_method: str='builtin', seed: int=
         LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))
         WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
 
-        torch.cuda.set_device(LOCAL_RANK)
+        accelerator = _accelerator_module()
+        if accelerator is not None:
+            accelerator.set_device(LOCAL_RANK)
         # torch.distributed.init_process_group(backend=backend, init_method='env://')
         torch.distributed.init_process_group(init_method='env://')
         # torch.distributed.barrier()
         
         # rank = torch.distributed.get_rank()
-        torch.cuda.empty_cache()
+        if accelerator is not None:
+            accelerator.empty_cache()
         enabled_dist = True
         if get_rank() == print_rank:
             print('Initialized distributed mode...')
@@ -136,9 +156,15 @@ def warp_model(
         rank = get_rank()
         model = nn.SyncBatchNorm.convert_sync_batchnorm(model) if sync_bn else model
         if dist_mode == 'dp':
+            if current_device() != 'cuda':
+                raise RuntimeError('DataParallel is only supported for CUDA; use DDP for XPU.')
             model = DP(model, device_ids=[rank], output_device=rank)
         elif dist_mode == 'ddp':
-            model = DDP(model, device_ids=[rank], output_device=rank, find_unused_parameters=find_unused_parameters)
+            if current_device() == 'cuda':
+                model = DDP(model, device_ids=[rank], output_device=rank,
+                            find_unused_parameters=find_unused_parameters)
+            else:
+                model = DDP(model, device_ids=None, find_unused_parameters=find_unused_parameters)
         else:
             raise AttributeError('')
 

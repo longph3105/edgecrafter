@@ -62,6 +62,22 @@
 pip install -r requirements.txt
 ```
 
+### Intel XPU（Intel 集成显卡 / 独立显卡）
+EdgeCrafter 通过 PyTorch 的 `torch.xpu` 后端支持 Intel 集成显卡和独立显卡。请先按照 [PyTorch 官方 XPU 安装说明](https://docs.pytorch.org/docs/stable/notes/get_start_xpu.html) 安装支持 XPU 的 PyTorch，然后安装其余依赖：
+
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/xpu
+pip install -r requirements.txt
+```
+
+验证 XPU 是否可用：
+
+```bash
+python xpu_debug.py --variant ecdetseg --device xpu
+```
+
+使用 `-d xpu` 选项运行推理或训练。
+
 ### ⚡ 快速开始（推理示例）
 测试 EdgeCrafter 最直接的方法是使用预训练模型对示例图像进行推理。
 ```bash
@@ -69,6 +85,7 @@ pip install -r requirements.txt
 wget https://github.com/capsule2077/edgecrafter/releases/download/edgecrafterv1/ecdet_l.pth
 # 2. 运行 PyTorch 推理
 # 请将 `path/to/your/image.jpg` 替换为实际图像路径
+# 添加 "-d cuda / xpu / cpu" 选项以选择设备
 python tools/inference/torch_inf.py -c configs/ecdet/ecdet_l.yml -r ecdet_l.pth -i path/to/your/image.jpg
 ```
 

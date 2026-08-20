@@ -354,7 +354,10 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--config", required=True, type=str)
     parser.add_argument("-r", "--resume", required=True, type=str)
     parser.add_argument("-i", "--input", required=True, type=str, help="Image path, image directory path, or video path")
-    parser.add_argument("-d", "--device", default="cuda:0", type=str)
+    parser.add_argument(
+        "-d", "--device", default="cuda:0", type=str,
+        help="Device to run inference on (e.g., 'cuda:0', 'xpu:0', 'xpu' or 'cpu')",
+    )
     parser.add_argument("-t", "--thresh", default=0.4, type=float)
     parser.add_argument("--num-workers", type=int, default=2, help="Thread workers for video draw/write")
     parser.add_argument("--no-skeleton", action="store_true", help="Draw keypoints only, no skeleton links")

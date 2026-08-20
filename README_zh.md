@@ -130,6 +130,27 @@ conda activate ec
 pip install -r requirements.txt
 ```
 
+### Intel XPU（Intel 集成显卡 / 独立显卡）
+EdgeCrafter 通过 PyTorch 的 `torch.xpu` 后端支持 Intel 集成显卡和独立显卡。请先按照 [PyTorch 官方 XPU 安装说明](https://docs.pytorch.org/docs/stable/notes/get_start_xpu.html) 安装支持 XPU 的 PyTorch，然后安装其余依赖：
+
+```bash
+conda create -n ec-xpu python=3.11 -y
+conda activate ec-xpu
+
+# 安装支持 Intel XPU 的 PyTorch
+pip install torch torchvision --index-url https://download.pytorch.org/whl/xpu
+
+pip install -r requirements.txt
+```
+
+验证 XPU 是否可用：
+
+```bash
+python xpu_debug.py --variant both --device xpu
+```
+
+使用 `-d xpu` 选项运行推理或训练。
+
 ### ⚡ 快速上手（模型推理）
 可以通过预训练模型对示例图像进行推理，以快速测试 EdgeCrafter 的性能。
 ```bash

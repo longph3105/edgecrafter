@@ -64,6 +64,22 @@
 pip install -r requirements.txt
 ```
 
+### Intel XPU (Intel iGPU / dGPU)
+EdgeCrafter supports Intel iGPUs and dGPUs through PyTorch's `torch.xpu` backend. First install an XPU-enabled PyTorch build by following the [official PyTorch XPU instructions](https://docs.pytorch.org/docs/stable/notes/get_start_xpu.html), then install the remaining dependencies:
+
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/xpu
+pip install -r requirements.txt
+```
+
+Verify XPU availability:
+
+```bash
+python xpu_debug.py --variant ecdetseg --device xpu
+```
+
+Run inference or training with the `-d xpu` option.
+
 ### ⚡ Quick Start (Inference)
 The easiest way to test EdgeCrafter is to run inference on a sample image using a pre-trained model.
 ```bash
@@ -71,6 +87,7 @@ The easiest way to test EdgeCrafter is to run inference on a sample image using 
 wget https://github.com/capsule2077/edgecrafter/releases/download/edgecrafterv1/ecdet_l.pth
 # 2. Run PyTorch inference
 # Make sure to replace `path/to/your/image.jpg` with an actual image path
+# Add the "-d cuda / xpu / cpu" option to select the device
 python tools/inference/torch_inf.py -c configs/ecdet/ecdet_l.yml -r ecdet_l.pth -i path/to/your/image.jpg
 ```
 
