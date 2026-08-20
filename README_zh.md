@@ -8,7 +8,7 @@ Task-Specialized Distillation</h1>
 <p align="center">
   <a href="https://intellindust-ai-lab.github.io/projects/EdgeCrafter/"><img src="https://img.shields.io/badge/Webpage-EdgeCrafter-blue.svg" alt="Webpage"></a>
   <a href="https://arxiv.org/abs/2603.18739"><img src="https://img.shields.io/badge/arXiv-EdgeCrafter-orange.svg" alt="arXiv"></a>
-  <a href="#"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-EdgeCrafter%20License-green.svg" alt="License"></a>
 
 </p>
 
@@ -166,7 +166,9 @@ python tools/inference/torch_inf.py -c configs/ecdet/ecdet_l.yml -r ecdet_l.pth 
 
 ## 📄 开源协议
 
-本项目遵循 [Apache 2.0 许可证](./LICENSE) 开源。
+本项目采用 EdgeCrafter License 发布，详见 [LICENSE](./LICENSE)。
+
+如需咨询商业授权，请访问 [Contact Us](https://www.intellindust.cn/#contact) 或发送邮件至 shenxi@intellindust.com。
 
 ---
 
