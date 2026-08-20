@@ -38,6 +38,7 @@ Task-Specialized Distillation</h1>
 ---
 
 ## 🚀 Updates
+- **[2026-08-20]** Thanks to [@Apolinario](https://github.com/apolinario) from the Hugging Face open-source team for building an interactive EdgeCrafter demo on Hugging Face Spaces. Try the [Demo](https://huggingface.co/spaces/Intellindust/edgecrafter-detection).
 - **[2026-08-14]** We released the Objects365 pretrained checkpoints. Enjoy it!
 - **[2026-08-13]** EdgeCrafter has been integrated into [Intel® Geti™](https://github.com/open-edge-platform/geti): fine-tune ECDet-S/M/L/X on your own data with no code, train on Intel dGPU / iGPU / CPU, export to OpenVINO™ IR and optimized for INT8 for edge deployment.
 - **[2026-08-11]** EdgeCrafter has been accepted for publication in **TMLR 2026** 🎉 
@@ -141,12 +142,13 @@ conda activate ec-xpu
 pip install torch==2.12.1+xpu torchvision --index-url https://download.pytorch.org/whl/xpu
 
 pip install -r requirements.txt
+
 ```
 
 Run inference or training with `-d xpu` option.
-```
 
-### ⚡ Quick Start (Inference)
+
+## ⚡ Quick Start (Inference)
 The easiest way to test EdgeCrafter is to run inference on a sample image using a pre-trained model.
 ```bash
 # 1. Download a pre-trained model (e.g., ECDet-L)

@@ -38,6 +38,7 @@ Task-Specialized Distillation</h1>
 
 ## 🚀 更新日志
 
+- **[2026-08-20]** 感谢 Hugging Face 开源团队的 [@Apolinario](https://github.com/apolinario) 构建了 EdgeCrafter 的交互式 Hugging Face Spaces 演示。欢迎体验 [Demo](https://huggingface.co/spaces/Intellindust/edgecrafter-detection)
 - **[2026-08-14]** 我们发布了基于Objects365预训练的权重
 - **[2026-08-13]** EdgeCrafter 已集成到 [Intel® Geti™](https://github.com/open-edge-platform/geti)：无需编写代码即可在自有数据上微调 ECDet-S/M/L/X，支持在 Intel 独立显卡 / 集成显卡 / CPU 上训练，并导出为 OpenVINO™ IR 以及 INT8 优化模型用于边缘部署
 - **[2026-08-11]** EdgeCrafter 已被 **TMLR 2026** 正式录用 🎉
