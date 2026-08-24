@@ -163,9 +163,9 @@ python tools/inference/torch_inf.py -c configs/ecdet/ecdet_l.yml -r ecdet_l.pth 
 
 ## 📄 License
 
-This project is released under the EdgeCrafter License. See the [LICENSE](./LICENSE) file for details.
+This project is released under the EdgeCrafter License. See the [LICENSE](./LICENSE.md) file for details.
 
-For commercial licensing inquiries, please contact [Contact Us](https://www.intellindust.cn/#contact) or email shenxi@intellindust.com.
+For commercial licensing inquiries, please [Contact Us](https://www.intellindust.cn/#contact) or email shenxi@intellindust.com.
 
 ---
 

@@ -166,7 +166,7 @@ python tools/inference/torch_inf.py -c configs/ecdet/ecdet_l.yml -r ecdet_l.pth 
 
 ## 📄 开源协议
 
-本项目采用 EdgeCrafter License 发布，详见 [LICENSE](./LICENSE)。
+本项目采用 EdgeCrafter License 发布，详见 [LICENSE](./LICENSE.md)。
 
 如需咨询商业授权，请访问 [Contact Us](https://www.intellindust.cn/#contact) 或发送邮件至 shenxi@intellindust.com。
 
